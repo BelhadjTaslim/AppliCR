@@ -57,8 +57,7 @@ public class GuiCR extends JFrame implements ActionListener {
 		this.conteneur.add(vueVisualiserVisiteurs,"Liste Visiteurs") ;
 		this.conteneur.add(vueVisualiserPraticiens,"Liste CRs") ;
 		
-		
-		this.vues.show(this.conteneur, "Liste CR");
+	//	this.vues.show(this.conteneur, "Liste CR");
 		
 		this.creerBarreMenu() ;
 		this.setVisible(true) ;
@@ -116,7 +115,7 @@ public class GuiCR extends JFrame implements ActionListener {
 	public void changerDeVue(String nomVue){
 		System.out.println("GuiCR::changerVue()") ;
 		if(nomVue.equals("")){
-			this.vueVisualiserCR.actualiser() ;
+			//this.vueVisualiserCR.actualiser() ;
 		}
 		else if(nomVue.equals("")){
 			this.vueVisualiserVisiteurs.actualiser() ;

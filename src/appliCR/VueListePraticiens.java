@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 public class VueListePraticiens extends JPanel {
 	private ModeleCR modele;
 	private Controleur controleur;
-
+	private
 	public VueListePraticiens(ModeleCR modele, Controleur controleur) {
 		super();
 		System.out.println("VueListePraticiens::VueListePraticien()") ;
