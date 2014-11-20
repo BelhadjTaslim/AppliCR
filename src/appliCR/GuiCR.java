@@ -2,22 +2,30 @@ package appliCR;
 
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 public class GuiCR extends JFrame implements ActionListener {
 	
 	private ModeleCR modele ;
 	private Controleur controleur ;
+	private JMenu fichier ;
+	private JMenu visiteur;
 	private JMenuItem itemQuitter ;
 	private JMenuItem itemVisualiserPraticiens ;
 	private JMenuItem itemEnregistrerPraticien ;
@@ -26,6 +34,15 @@ public class GuiCR extends JFrame implements ActionListener {
 	private JMenuItem itemVisualiserCR ;
 	private JMenuItem seConnecter ;
 	private JMenuItem seDeconnecter ;
+	private JTextField tfLogin;
+	private JLabel labelLogin;
+	private JPasswordField pfMdp;
+	private JLabel labelMdp;
+
+	
+	
+	private JPanel panneauAuthentification;
+
 	
 	private VueListeCR vueVisualiserCR ;
 	private VueListeVisiteurs vueVisualiserVisiteurs ;
@@ -63,14 +80,28 @@ public class GuiCR extends JFrame implements ActionListener {
 		this.creerBarreMenu() ;
 		this.setVisible(true) ;
 		
+		panneauAuthentification = new JPanel();
+		panneauAuthentification.setLayout(new GridLayout(3,3,10,10));
+		tfLogin = new JTextField(10) ;
+		pfMdp = new JPasswordField(10) ;
+
+
+		labelLogin= new JLabel("Login : ");
+		labelMdp = new JLabel ("Mot de passe : ");
+		panneauAuthentification.add(labelLogin);
+		panneauAuthentification.add(tfLogin);
+		panneauAuthentification.add(labelMdp);
+		panneauAuthentification.add(pfMdp);
+
+		pfMdp.setEchoChar('*') ;
 		
 	}
 	
 	private void creerBarreMenu(){
 		
 		JMenuBar barreDeMenu = new JMenuBar();
-		JMenu fichier = new JMenu("Fichier") ;
-		JMenu visiteur = new JMenu("Visiteur") ;
+		fichier = new JMenu("Fichier") ;
+		visiteur = new JMenu("Visiteur") ;
 		
 		this.seConnecter = new JMenuItem("Se Connecter") ;
 		this.seDeconnecter = new JMenuItem("Se Déconnecter") ;
@@ -158,7 +189,41 @@ public class GuiCR extends JFrame implements ActionListener {
 			this.controleur.visualiserPraticien() ;
 		}
 		else if(sourceEvt == this.seConnecter) {
-			this.controleur.vueAuthentification() ;
+			int ok = JOptionPane.showOptionDialog(this, panneauAuthentification, "Identification", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, EXIT_ON_CLOSE);
+			String login = tfLogin.getText();
+			String mdp = pfMdp.getText();
+			if(ok == JOptionPane.CANCEL_OPTION){
+			this.seDeconnecter.setEnabled(false) ;
+			this.seConnecter.setEnabled(true) ;
+//			this.menuComptesRendus.setEnabled(false) ;
+			this.visiteur.setEnabled(false) ;
+//			this.menuPraticien.setEnabled(false) ;
+			this.vues.show(this.conteneur,"Accueil") ;
+			}
+			else if(login.isEmpty() || mdp.isEmpty()){
+				JOptionPane.showMessageDialog(null, "Veuillez renseigner tous les champs", "Saisir votre login et votre mot de passe : ", JOptionPane.ERROR_MESSAGE);
+				this.seDeconnecter.setEnabled(false) ;
+				this.seConnecter.setEnabled(true) ;
+//				this.menuComptesRendus.setEnabled(false) ;
+				this.visiteur.setEnabled(false) ;
+//				this.menuPraticien.setEnabled(false) ;
+				this.vues.show(this.conteneur,"Accueil") ;
+			}
+			else if(ok == JOptionPane.OK_OPTION){
+				boolean co = this.controleur.tenterConnexion(login, mdp);
+				if(co == true){
+					this.seDeconnecter.setEnabled(true) ;
+					this.seConnecter.setEnabled(false) ;
+//					this.menuComptesRendus.setEnabled(true) ;
+					this.visiteur.setEnabled(true) ;
+//					this.menuPraticien.setEnabled(true) ;
+					this.vues.show(this.conteneur,"Accueil") ;
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Vous n'êtes pas un délégué !", "Erreur d'identification", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			
 		}
 		
 	}

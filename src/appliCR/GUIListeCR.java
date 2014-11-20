@@ -37,7 +37,4 @@ public class GUIListeCR extends JFrame {
         pack();
     }
  
-    public static void main(String[] args) {
-       GUIListeCR compte = new GUIListeCR();
-    }
 }

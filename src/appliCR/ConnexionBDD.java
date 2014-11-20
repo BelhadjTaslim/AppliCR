@@ -20,7 +20,10 @@ public class ConnexionBDD  {
 			
 		
 		try{
-			requete = "SELECT VIS_NOM, VIS_MDP FROM VISITEUR";
+			requete = "SELECT VISITEUR.VIS_MATRICULE, VISITEUR.VIS_MDP " +
+					  "FROM VISITEUR, TRAVAILLER " +
+					  "WHERE VISITEUR.VIS_MATRICULE = TRAVAILLER.VIS_MATRICULE " +
+					  "AND TRA_ROLE='Délégué' AND TRAVAILLER.VIS_MATRICULE=? AND VIS_MDP=?;";
 			Class.forName(driver);
 			System.out.println("Chargement OK");
 			connexion = DriverManager.getConnection(url,user,password);
@@ -40,10 +43,13 @@ public class ConnexionBDD  {
 			
 		}
 	}
-	public static void main(String[] args)throws SQLException, ClassNotFoundException{
-		ConnexionBDD connection = new ConnexionBDD();
-	
-	}
+//	public getConnexion() {
+//		
+//	}
+//	public static void main(String[] args)throws SQLException, ClassNotFoundException{
+//		ConnexionBDD connection = new ConnexionBDD();
+//	
+//	}
 
 }
 

@@ -37,7 +37,5 @@ public class GUIListePraticiens extends JFrame {
         pack();
     }
  
-    public static void main(String[] args) {
-       GUIListePraticiens compte = new GUIListePraticiens();
-    }
+
 }

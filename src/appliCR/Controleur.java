@@ -4,7 +4,6 @@ public class Controleur {
 
 	private ModeleCR modele ;
 	private GuiCR vuePrincipale ;
-	private VueAuthentification vueConnexion ;
 	
 	public Controleur(ModeleCR modele){
 		super();
@@ -85,10 +84,9 @@ public class Controleur {
 //		}
 		System.out.println("") ;
 	}
-	public VueAuthentification vueAuthentification() {
-		System.out.println("Controleur::vueAuthentification");
-		return vueConnexion;
 		
+	public boolean tenterConnexion(String login, String mdp) {
+		return false;
 	}
 
 	
