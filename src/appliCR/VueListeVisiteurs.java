@@ -59,6 +59,5 @@ public class VueListeVisiteurs extends JPanel {
 		
 		
 	}
-	}
-
 }
+

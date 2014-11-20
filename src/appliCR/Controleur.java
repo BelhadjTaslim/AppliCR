@@ -4,6 +4,7 @@ public class Controleur {
 
 	private ModeleCR modele ;
 	private GuiCR vuePrincipale ;
+	private VueAuthentification vueConnexion ;
 	
 	public Controleur(ModeleCR modele){
 		super();
@@ -49,7 +50,7 @@ public class Controleur {
 	
 	public void enregistrerPraticien(String nomPra,int numPra){
 		System.out.println("Controleur::enregistrerPraticien()") ;
-		this.modele.ajouterPraticien(nomPra,numPra) ;
+//		this.modele.ajouterPraticien(nomPra,numPra) ;
 		this.vuePrincipale.changerDeVue("Liste praticiens") ;
 	}
 	
@@ -59,13 +60,6 @@ public class Controleur {
 		this.vuePrincipale.changerDeVue("Liste praticiens") ;
 	}
 	
-	
-		
-	public void annulerLocation(int numeroLocation){
-		System.out.println("Controleur::annulerLocation()") ;
-		this.modele.supprimerLocation(numeroLocation) ;
-		this.vuePrincipale.changerDeVue("Liste locations") ;
-	}
 	
 	
 	public void quitterApplication(){
@@ -79,17 +73,22 @@ public class Controleur {
 		System.out.println("") ;
 		System.out.println("------------------ Praticiens ----------------------------") ;
 		for(Praticien Praticien : this.modele.getPraticiens()){
-			System.out.println(praticien) ;
+//			System.out.println(praticien) ;
 		}
 		System.out.println("------------------- Visiteur -----------------------------") ;
 		for(Visiteur visiteur : this.modele.getVisiteurs()){
 			System.out.println(visiteur) ;
 		}
 		System.out.println("------------------ Véhicules ----------------------------") ;
-		for(CompteRendu compteRendu : this.modele.getCompteRendu()){
-			System.out.println(compteRendu) ;
-		}
+//		for(CompteRendu compteRendu : this.modele.getCompteRendu()){
+//			System.out.println(compteRendu) ;
+//		}
 		System.out.println("") ;
+	}
+	public VueAuthentification vueAuthentification() {
+		System.out.println("Controleur::vueAuthentification");
+		return vueConnexion;
+		
 	}
 
 	

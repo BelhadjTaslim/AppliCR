@@ -24,6 +24,8 @@ public class GuiCR extends JFrame implements ActionListener {
 	private JMenuItem itemVisualiserVisiteurs ;
 	private JMenuItem itemEnregistrerVisiteur ;
 	private JMenuItem itemVisualiserCR ;
+	private JMenuItem seConnecter ;
+	private JMenuItem seDeconnecter ;
 	
 	private VueListeCR vueVisualiserCR ;
 	private VueListeVisiteurs vueVisualiserVisiteurs ;
@@ -39,9 +41,8 @@ public class GuiCR extends JFrame implements ActionListener {
 		this.controleur = controleur ;
 		
 		this.setTitle("GSB");
-		this.setSize(850,520);
+		this.setSize(1120,520);
 		this.setLocationRelativeTo(null);
-		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		this.vues = new CardLayout(2,2) ;
@@ -50,14 +51,14 @@ public class GuiCR extends JFrame implements ActionListener {
 		
 		vueVisualiserCR = new VueListeCR(modele,controleur) ;
 		vueVisualiserVisiteurs = new VueListeVisiteurs(modele,controleur) ;
-		vueVisualiserPraticiens = new VueListePraticiens(modele,controleur) ;
+//		vueVisualiserPraticiens = new VueListePraticiens(modele,controleur) ;
 		
 		
 		this.conteneur.add(vueVisualiserCR,"Liste véhicules") ;
 		this.conteneur.add(vueVisualiserVisiteurs,"Liste Visiteurs") ;
-		this.conteneur.add(vueVisualiserPraticiens,"Liste CRs") ;
+//		this.conteneur.add(vueVisualiserPraticiens,"Liste CRs") ;
 		
-	//	this.vues.show(this.conteneur, "Liste CR");
+		this.vues.show(this.conteneur, "Liste Visiteurs");
 		
 		this.creerBarreMenu() ;
 		this.setVisible(true) ;
@@ -69,27 +70,39 @@ public class GuiCR extends JFrame implements ActionListener {
 		
 		JMenuBar barreDeMenu = new JMenuBar();
 		JMenu fichier = new JMenu("Fichier") ;
+		JMenu visiteur = new JMenu("Visiteur") ;
 		
-		JMenuItem seConnecter = new JMenuItem("Se Connecter") ;
-		JMenuItem seDeconnecter = new JMenuItem("Se Déconnecter") ;
-		JMenuItem quitter = new JMenuItem ("Quitter") ;
+		this.seConnecter = new JMenuItem("Se Connecter") ;
+		this.seDeconnecter = new JMenuItem("Se Déconnecter") ;
+		this.itemQuitter = new JMenuItem ("Quitter") ;
+		itemQuitter.addActionListener(this);
+		seConnecter.addActionListener(this);
+		seDeconnecter.addActionListener(this) ;
 		seConnecter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,InputEvent.CTRL_MASK));
 		seDeconnecter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,InputEvent.CTRL_MASK));
-		quitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,InputEvent.CTRL_MASK));
+		itemQuitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,InputEvent.CTRL_MASK));
 		seConnecter.setToolTipText("Connexion à l'application GSB");
 		seDeconnecter.setToolTipText("Déconnexion de l'application GSB");
-		quitter.setToolTipText("Quitter l'application");
+		itemQuitter.setToolTipText("Quitter l'application");
+		
+		
+		JMenuItem listeVisiteur = new JMenuItem("Liste des visiteurs") ;
+		JMenuItem enregisterVisiteur = new JMenuItem ("Enregistrer un nouveau visiteur") ;
 		
 		fichier.add(seConnecter) ;
 		fichier.add(seDeconnecter) ;
 		
 		fichier.addSeparator();
 		
-		fichier.add(quitter) ;
+		fichier.add(itemQuitter) ;
+		
+		visiteur.add(listeVisiteur) ;
+		visiteur.add(enregisterVisiteur) ;
 		
 		barreDeMenu.add(fichier) ;
+		barreDeMenu.add(visiteur) ;
 		
-		this.add(barreDeMenu) ;
+//		this.add(barreDeMenu) ;
 		
 		this.setJMenuBar(barreDeMenu);
 		
@@ -121,17 +134,18 @@ public class GuiCR extends JFrame implements ActionListener {
 			this.vueVisualiserVisiteurs.actualiser() ;
 		}
 		else if(nomVue.equals("")){
-			this.vueVisualiserPraticiens.actualiser() ;
+//			this.vueVisualiserPraticiens.actualiser() ;
 		}
 		this.vues.show(this.conteneur,nomVue) ;
 	}
 	
 	public void actionPerformed(ActionEvent evenement) {
 		System.out.println("----------------------------------------") ;
-		System.out.println("GuiRentaco::actionPerformed()") ;
+		System.out.println("GuiCR::actionPerformed()") ;
 		Object sourceEvt = evenement.getSource() ;
 		
 		if(sourceEvt == this.itemQuitter){
+			
 			this.controleur.quitterApplication() ;
 		}
 		else if(sourceEvt == this.itemVisualiserVisiteurs){
@@ -142,6 +156,9 @@ public class GuiCR extends JFrame implements ActionListener {
 		}
 		else if(sourceEvt == this.itemVisualiserPraticiens){
 			this.controleur.visualiserPraticien() ;
+		}
+		else if(sourceEvt == this.seConnecter) {
+			this.controleur.vueAuthentification() ;
 		}
 		
 	}
